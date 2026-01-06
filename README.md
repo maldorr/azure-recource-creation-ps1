@@ -14,9 +14,11 @@ Connect-AzAccount
 # Select your subscription (if needed)
 # Set-AzContext -SubscriptionId "your-id-here"
 
----------- VARIABLES ----------
-PowerShell
+```
 
+### ---------- VARIABLES ----------
+
+```powershell
 $location = "westeurope"
 $resourceGroupName = "RG-OpenStack-Replica"
 
@@ -40,14 +42,18 @@ $adminUser      = "azureuser"
 $adminPassword  = ConvertTo-SecureString "SecurePass!123" -AsPlainText -Force
 $cred           = New-Object System.Management.Automation.PSCredential ($adminUser, $adminPassword)
 
----------- RESOURCE GROUP ----------
-PowerShell
+```
 
+### ---------- RESOURCE GROUP ----------
+
+```powershell
 New-AzResourceGroup -Name $resourceGroupName -Location $location
 
----------- VNET + SUBNET ----------
-PowerShell
+```
 
+### ---------- VNET + SUBNET ----------
+
+```powershell
 # 1. Create Subnet Config (192.168.100.0/24)
 $subnetConfig = New-AzVirtualNetworkSubnetConfig `
   -Name $subnetName `
@@ -61,17 +67,20 @@ $vnet = New-AzVirtualNetwork `
   -AddressPrefix "192.168.0.0/16" `
   -Subnet $subnetConfig
 
----------- SECURITY GROUP (NSG) ----------
-PowerShell
+```
 
+### ---------- SECURITY GROUP (NSG) ----------
+
+```powershell
 # Create the NSG container
 $nsg = New-AzNetworkSecurityGroup `
   -ResourceGroupName $resourceGroupName `
   -Location $location `
   -Name $nsgName
 
-PowerShell
+```
 
+```powershell
 # Rule 1: Allow SSH (Port 22) - Matches HEAT tcp 22
 $nsg | Add-AzNetworkSecurityRuleConfig `
   -Name "Allow-SSH" `
@@ -96,9 +105,11 @@ $nsg | Add-AzNetworkSecurityRuleConfig `
   -DestinationPortRange "*" `
   -Access Allow | Set-AzNetworkSecurityGroup
 
----------- PUBLIC IP (FLOATING IP) ----------
-PowerShell
+```
 
+### ---------- PUBLIC IP (FLOATING IP) ----------
+
+```powershell
 $publicIp = New-AzPublicIpAddress `
   -Name $publicIpName `
   -ResourceGroupName $resourceGroupName `
@@ -106,9 +117,11 @@ $publicIp = New-AzPublicIpAddress `
   -AllocationMethod Static `
   -Sku Standard
 
----------- NETWORK INTERFACE (NIC) ----------
-PowerShell
+```
 
+### ---------- NETWORK INTERFACE (NIC) ----------
+
+```powershell
 $subnet = Get-AzVirtualNetworkSubnetConfig -Name $subnetName -VirtualNetwork $vnet
 
 $nic = New-AzNetworkInterface `
@@ -119,9 +132,11 @@ $nic = New-AzNetworkInterface `
   -NetworkSecurityGroup $nsg `
   -PublicIpAddress $publicIp
 
----------- STORAGE (EXTRA VOLUME) ----------
-PowerShell
+```
 
+### ---------- STORAGE (EXTRA VOLUME) ----------
+
+```powershell
 # Matches HEAT resource: my_data_volume (Size: 1GB)
 $diskConfig = New-AzDiskConfig `
   -Location $location `
@@ -134,9 +149,11 @@ $dataDisk = New-AzDisk `
   -DiskName $diskName `
   -Disk $diskConfig
 
----------- VM CONFIGURATION & CREATION ----------
-PowerShell
+```
 
+### ---------- VM CONFIGURATION & CREATION ----------
+
+```powershell
 # 1. Configure VM Base
 $vmConfig = New-AzVMConfig -VMName $vmName -VMSize $vmSize
 
@@ -166,12 +183,18 @@ $vmConfig = $vmConfig | Add-AzVMDataDisk `
 # 6. Create the VM
 New-AzVM -ResourceGroupName $resourceGroupName -Location $location -VM $vmConfig
 
----------- OUTPUTS ----------
-PowerShell
+```
 
+### ---------- OUTPUTS ----------
+
+```powershell
 $finalIp = (Get-AzPublicIpAddress -Name $publicIpName -ResourceGroupName $resourceGroupName).IpAddress
 Write-Host "✅ VM Created Successfully"
 Write-Host "SSH Command: ssh $adminUser@$finalIp"
 Write-Host "Volume Status: Attached at LUN 0"
 
+```
 
+```
+
+```
