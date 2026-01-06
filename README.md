@@ -26,7 +26,7 @@ $resourceGroupName = "RG-OpenStack-Replica"
 $vnetName       = "my_private_network"
 $subnetName     = "my_subnet"
 $publicIpName   = "my_floating_ip"
-$nsgName        = "allow_ssh_ping"
+$nsgName        = "NSG"
 $nicName        = "my_interface"
 
 # Storage Name (Matching HEAT: my_data_volume)
