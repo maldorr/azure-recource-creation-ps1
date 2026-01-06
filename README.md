@@ -34,7 +34,7 @@ $diskName       = "my_extra_disk"
 $diskSizeGB     = 1
 
 # VM Details (Matching HEAT: My_Full_Server)
-$vmName         = "My-Full-Server"
+$vmName         = "My_Full_Server"
 $vmSize         = "Standard_B1s"  # Similar to m1.tiny
 
 # Credentials
