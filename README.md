@@ -1,5 +1,5 @@
 # AZURE-FULL-STACK-VM-WITH-VOLUME
-## PowerShell Script - Replicating OpenStack HEAT Template
+## PowerShell Script 
 
 This project replicates an OpenStack full-stack deployment (Network, Security, VM, Volume, Floating IP) using native Azure PowerShell.
 
