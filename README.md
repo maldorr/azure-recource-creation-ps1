@@ -1,12 +1,18 @@
 # AZURE-FULL-STACK-VM-WITH-VOLUME
-# Script PowerShell - Replicating OpenStack HEAT Template
+## PowerShell Script - Replicating OpenStack HEAT Template
 
-# ---------- PREREQUISITES ----------
+This project replicates an OpenStack full-stack deployment (Network, Security, VM, Volume, Floating IP) using native Azure PowerShell.
+
+---
+
+### ---------- PREREQUISITES ----------
+
 ```powershell
 # Login to Azure
 Connect-AzAccount
-# Select your subscription if you have multiple
-# Set-AzContext -SubscriptionId "xxxx-xxxx-xxxx-xxxx"
+
+# Select your subscription (if needed)
+# Set-AzContext -SubscriptionId "your-id-here"
 
 ---------- VARIABLES ----------
 PowerShell
@@ -169,17 +175,3 @@ Write-Host "SSH Command: ssh $adminUser@$finalIp"
 Write-Host "Volume Status: Attached at LUN 0"
 
 
----
-
-### **How to Apply This:**
-1.  Open your terminal.
-2.  Edit your README: `nano README.md`
-3.  Delete everything inside (Ctrl+K cuts lines) or start fresh.
-4.  Paste the **entire block** above.
-5.  Save (`Ctrl+O`) and Exit (`Ctrl+X`).
-6.  Push to GitHub:
-    ```bash
-    git add README.md
-    git commit -m "Update README to match script format"
-    git push origin main
-    ```
